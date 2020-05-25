@@ -1,0 +1,14 @@
+C:\Users\Natashka\Desktop\MyTrello\bin\Debug\netcoreapp2.2\MyTrello.deps.json
+C:\Users\Natashka\Desktop\MyTrello\bin\Debug\netcoreapp2.2\MyTrello.runtimeconfig.json
+C:\Users\Natashka\Desktop\MyTrello\bin\Debug\netcoreapp2.2\MyTrello.runtimeconfig.dev.json
+C:\Users\Natashka\Desktop\MyTrello\bin\Debug\netcoreapp2.2\MyTrello.dll
+C:\Users\Natashka\Desktop\MyTrello\bin\Debug\netcoreapp2.2\MyTrello.pdb
+C:\Users\Natashka\Desktop\MyTrello\obj\Debug\netcoreapp2.2\MyTrello.csprojAssemblyReference.cache
+C:\Users\Natashka\Desktop\MyTrello\obj\Debug\netcoreapp2.2\MyTrello.csproj.CoreCompileInputs.cache
+C:\Users\Natashka\Desktop\MyTrello\obj\Debug\netcoreapp2.2\MyTrello.RazorAssemblyInfo.cache
+C:\Users\Natashka\Desktop\MyTrello\obj\Debug\netcoreapp2.2\MyTrello.RazorAssemblyInfo.cs
+C:\Users\Natashka\Desktop\MyTrello\obj\Debug\netcoreapp2.2\MyTrello.AssemblyInfoInputs.cache
+C:\Users\Natashka\Desktop\MyTrello\obj\Debug\netcoreapp2.2\MyTrello.AssemblyInfo.cs
+C:\Users\Natashka\Desktop\MyTrello\obj\Debug\netcoreapp2.2\MyTrello.RazorTargetAssemblyInfo.cache
+C:\Users\Natashka\Desktop\MyTrello\obj\Debug\netcoreapp2.2\MyTrello.dll
+C:\Users\Natashka\Desktop\MyTrello\obj\Debug\netcoreapp2.2\MyTrello.pdb
