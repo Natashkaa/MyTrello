@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyTrello.Domain.Models;
@@ -17,14 +18,36 @@ namespace MyTrello.Services
             this.userRepository = userRepository;
             this.unitOfWork = unitOfWork;
         }
-        public Task<UserResponse> AddAsync(User user)
+        public async Task<UserResponse> AddAsync(User user)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                await userRepository.AddAsync(user);
+                await unitOfWork.CompleteAsync();
+                return new UserResponse(user);
+            }
+            catch(Exception ex)
+            {
+                return new UserResponse($"Error: something happend while adding user: {ex.Message}");
+            }
         }
 
-        public Task<UserResponse> DeleteAsync(int id)
+        public async Task<UserResponse> DeleteAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var user = await userRepository.GetByIdAsync(id);
+            if(user == null)
+                return new UserResponse($"Can not find user with id {id}");
+
+            try
+            {
+                userRepository.Remove(user);
+                await unitOfWork.CompleteAsync();
+                return new UserResponse(user);
+            }
+            catch(Exception ex)
+            {
+                return new UserResponse($"Error: something happend while deleting user: {ex.Message}");
+            }
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
@@ -32,9 +55,24 @@ namespace MyTrello.Services
             return await userRepository.GetAllAsync();
         }
 
-        public Task<UserResponse> UpdateAsync(int id, User user)
+        public async Task<UserResponse> UpdateAsync(int id, User user)
         {
-            throw new System.NotImplementedException();
+            var existUser = await userRepository.GetByIdAsync(id);
+            if(existUser == null)
+                return new UserResponse($"Can not find user with id {id}");
+            existUser.User_FirstName = user.User_FirstName;
+            existUser.User_LastName = user.User_LastName;
+            existUser.User_Email = user.User_Email;
+            try
+            {
+                userRepository.Update(existUser);
+                await unitOfWork.CompleteAsync();
+                return new UserResponse(existUser);
+            }
+            catch(Exception ex)
+            {
+                return new UserResponse($"User update error: {ex.Message}");
+            }
         }
     }
 }

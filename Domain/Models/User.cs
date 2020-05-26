@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyTrello.Domain.Models
 {
@@ -22,6 +23,7 @@ namespace MyTrello.Domain.Models
         [Required]
         [StringLength(20)]
         public string User_Password { get; set; }
+        [NotMapped]
         public virtual ICollection<Task> Tasks { get; set; }
     }
 }

@@ -11,9 +11,9 @@ namespace MyTrello.Persistance.Repositories
     {
         public UserRepository(AppDbContext context) : base(context){}
 
-        public System.Threading.Tasks.Task AddAsync(User newUser)
+        public async System.Threading.Tasks.Task AddAsync(User newUser)
         {
-            throw new System.NotImplementedException();
+            await context.Users.AddAsync(newUser);
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
@@ -21,19 +21,19 @@ namespace MyTrello.Persistance.Repositories
             return await context.Users.ToListAsync();
         }
 
-        public Task<User> GetByIdAsync(int id)
+        public async Task<User> GetByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await context.Users.FirstOrDefaultAsync(u => u.UserId == id);
         }
 
         public void Remove(User user)
         {
-            throw new System.NotImplementedException();
+            context.Users.Remove(user);
         }
 
         public void Update(User user)
         {
-            throw new System.NotImplementedException();
+            context.Users.Update(user);
         }
     }
 }

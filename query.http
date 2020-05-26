@@ -1,1 +1,30 @@
-GET http://localhost:5000/api/user
+///***USERS QUERY***///
+//GET http://localhost:5000/api/user
+
+# POST http://localhost:5000/api/user
+# Content-Type: application/json
+
+# {
+#     "User_FirstName": "test",
+#     "User_LastName": "test",
+#     "User_PhotoPath": "/test.jpg",
+#     "User_Email": "ese@gmail.com",
+#     "User_Password": "ses",
+# }
+
+# PUT http://localhost:5000/api/user/2
+# Content-Type: application/json
+
+# {
+#     "User_FirstName": "Tom",
+#     "User_LastName": "Kekichex",
+#     "User_PhotoPath": "/test.jpg",
+#     "User_Email": "tom@gmail.com",
+#     "User_Password": "tomtom",
+# }
+
+//DELETE http://localhost:5000/api/user/3
+
+///***TASKS***///
+//GET http://localhost:5000/api/task
+
