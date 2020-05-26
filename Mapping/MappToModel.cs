@@ -11,6 +11,7 @@ namespace MyTrello.Mapping
             CreateMap<UserResource, User>();
             CreateMap<SaveUserResource, User>();
             CreateMap<TaskResource, Task>();
+            CreateMap<SaveTaskResource, Task>();
         }
     }
 }

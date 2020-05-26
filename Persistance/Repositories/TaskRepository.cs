@@ -9,30 +9,31 @@ namespace MyTrello.Persistance.Repositories
     public class TaskRepository : BaseRepository, ITaskRepository
     {
         public TaskRepository(AppDbContext context) : base(context){}
-        public System.Threading.Tasks.Task AddAsync(Domain.Models.Task newTask)
+        public async System.Threading.Tasks.Task AddAsync(Domain.Models.Task newTask)
         {
-            throw new System.NotImplementedException();
+            await context.Tasks.AddAsync(newTask);
         }
 
         public void Delete(Domain.Models.Task task)
         {
-            throw new System.NotImplementedException();
+            context.Tasks.Remove(task);
         }
 
         public async Task<IEnumerable<Domain.Models.Task>> GetAllAsync()
         {
-            return await context.Tasks.Include(t => t.Users)
-                                      .ToListAsync();
+            // return await context.Tasks.Include(t => t.Users)
+            //                           .ToListAsync();
+            return await context.Tasks.ToListAsync();
         }
 
-        public Task<Domain.Models.Task> GetByIdAsync(int id)
+        public async Task<Domain.Models.Task> GetByIdAsync(int id)
         {
-            throw new System.NotImplementedException();
+            return await context.Tasks.FirstOrDefaultAsync(t => t.TaskId == id);
         }
 
         public void Update(Domain.Models.Task task)
         {
-            throw new System.NotImplementedException();
+            context.Tasks.Update(task);
         }
     }
 }

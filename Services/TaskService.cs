@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using MyTrello.Domain.Repositories;
@@ -17,14 +18,36 @@ namespace MyTrello.Services
             this.unitOfWork = unitOfWork;
         }
 
-        public Task<TaskResponse> AddAsync(Domain.Models.Task task)
+        public async Task<TaskResponse> AddAsync(Domain.Models.Task task)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                await taskRepository.AddAsync(task);
+                await unitOfWork.CompleteAsync();
+                return new TaskResponse(task);
+            }
+            catch(Exception ex)
+            {
+                return new TaskResponse($"Error: something happend while adding task: {ex.Message}");
+            }
         }
 
-        public Task<TaskResponse> DeleteRemove(int id)
+        public async Task<TaskResponse> DeleteAsync(int id)
         {
-            throw new System.NotImplementedException();
+            var task = await taskRepository.GetByIdAsync(id);
+            if(task == null)
+                return new TaskResponse($"Can not find task with id {id}");
+
+            try
+            {
+                taskRepository.Delete(task);
+                await unitOfWork.CompleteAsync();
+                return new TaskResponse(task);
+            }
+            catch(Exception ex)
+            {
+                return new TaskResponse($"Error: something happend while deleting task: {ex.Message}");
+            }
         }
 
         public async Task<IEnumerable<Domain.Models.Task>> GetAllAsync()
@@ -32,9 +55,25 @@ namespace MyTrello.Services
             return await taskRepository.GetAllAsync();
         }
 
-        public Task<TaskResponse> UpdateAsync(int id, Domain.Models.Task task)
+        public async Task<TaskResponse> UpdateAsync(int id, Domain.Models.Task task)
         {
-            throw new System.NotImplementedException();
+            var existTask = await taskRepository.GetByIdAsync(id);
+            if(existTask == null)
+                return new TaskResponse($"Can not find task with id {id}");
+            existTask.Task_Priority = task.Task_Priority;
+            existTask.Task_Name = task.Task_Name;
+            existTask.Task_Description = task.Task_Description;
+            existTask.IsArchived = task.IsArchived;
+            try
+            {
+                taskRepository.Update(existTask);
+                await unitOfWork.CompleteAsync();
+                return new TaskResponse(existTask);
+            }
+            catch(Exception ex)
+            {
+                return new TaskResponse($"User update error: {ex.Message}");
+            }
         }
     }
 }

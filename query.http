@@ -28,3 +28,27 @@
 ///***TASKS***///
 //GET http://localhost:5000/api/task
 
+# POST http://localhost:5000/api/task
+# Content-Type: application/json
+
+# {
+#     "Task_Priority": "bad",
+#     "Task_Name": "bas",
+#     "Task_Description": "dfaam",
+#     "UserId": "1",
+#     "IsArchived": "false",
+# }
+
+# PUT http://localhost:5000/api/task/2
+# Content-Type: application/json
+
+# {
+#       "Task_Priority": "grey",
+#      "Task_Name": "testTask",
+#      "Task_Description": "ese@gmail.com",
+#      "UserId": "1",
+#      "IsArchived": "true",
+# }
+
+DELETE http://localhost:5000/api/task/3
+
