@@ -7,5 +7,6 @@ namespace MyTrello.Resources
         public string User_LastName { get; set; }
         public string User_PhotoPath { get; set; }
         public string User_Email { get; set; }
+        public string Token { get; set; }
     }
 }

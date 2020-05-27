@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -12,8 +14,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using MyTrello.Domain.Repositories;
 using MyTrello.Domain.Services;
+using MyTrello.Helpers;
 using MyTrello.Persistance.Contexts;
 using MyTrello.Persistance.Repositories;
 using MyTrello.Services;
@@ -38,6 +42,30 @@ namespace MyTrello
             var connection = @"data source=DESKTOP-JQDJF79\SQLEXPRESS;initial catalog=MyTrello;integrated security=True;MultipleActiveResultSets=True";
             services.AddEntityFrameworkSqlServer()
                     .AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
+            //JWT
+            var appSettingSection = Configuration.GetSection("AppSetting");
+            services.Configure<AppSettings>(appSettingSection);
+
+            var appSettings = appSettingSection.Get<AppSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddAuthentication(x => 
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x => 
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
 
             services.AddCors();
 
@@ -46,6 +74,7 @@ namespace MyTrello
             services.AddScoped<ITaskRepository, TaskRepository>();
             services.AddScoped<ITaskService, TaskService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            services.AddScoped<IAuthenticationService, AuthenticationService>();
 
             services.AddAutoMapper(typeof(Startup));
         }
@@ -67,6 +96,7 @@ namespace MyTrello
                 .AllowAnyHeader()
                 .AllowAnyMethod());
 
+            app.UseAuthentication();
             app.UseHttpsRedirection();
             app.UseMvc();
         }

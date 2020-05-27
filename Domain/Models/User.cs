@@ -25,5 +25,7 @@ namespace MyTrello.Domain.Models
         public string User_Password { get; set; }
         [NotMapped]
         public virtual ICollection<Task> Tasks { get; set; }
+        [NotMapped]
+        public string Token { get; set; }
     }
 }

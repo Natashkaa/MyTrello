@@ -34,7 +34,7 @@ namespace MyTrello.Controllers
             var result = new ResponseResult
             {
                 Data = mappedUsers,
-                Message = "",
+                Message = mappedUsers.Count() > 0 ? $"Result: {mappedUsers.Count()} items" : "Result: 0 items",
                 Success = true
             };
             return result;

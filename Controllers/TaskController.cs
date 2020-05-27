@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using MyTrello.Resources.Communication;
 
 namespace MyTrello.Controllers
 {
+    
     [Route("api/[controller]")]
     [ApiController]
     public class TaskController : ControllerBase
@@ -30,7 +32,7 @@ namespace MyTrello.Controllers
             var result = new ResponseResult
             {
                 Data = mappedTasks,
-                Message = "",
+                Message = mappedTasks.Count() > 0 ? $"Result: {mappedTasks.Count()} items" : "Result: 0 items",
                 Success = true
             };
             return result;
