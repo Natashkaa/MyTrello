@@ -42,9 +42,12 @@ namespace MyTrello.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var response = await userService.GetByIdAsync(id);
+            var resource = mapper.Map<User, UserResource>(response.User);
+            var res = response.GetResponseResult(resource);
+            return Ok(res);
         }
 
         // POST api/values

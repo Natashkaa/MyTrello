@@ -11,6 +11,5 @@ namespace MyTrello.Resources
         public string Task_Description { get; set; }
         public int? UserId { get; set; }
         public bool? IsArchived { get; set; }
-        public User User { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace MyTrello
             services.AddEntityFrameworkSqlServer()
                     .AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
             //JWT
-            var appSettingSection = Configuration.GetSection("AppSetting");
+            var appSettingSection = Configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingSection);
 
             var appSettings = appSettingSection.Get<AppSettings>();

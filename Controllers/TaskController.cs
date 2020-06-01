@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,9 +41,12 @@ namespace MyTrello.Controllers
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return "value";
+            var response = await taskService.GetByIdAsync(id);
+            var resource = mapper.Map<Domain.Models.Task, TaskResource>(response.Task);
+            var res = response.GetResponseResult(resource);
+            return Ok(res);
         }
 
         // POST api/values
@@ -53,6 +57,7 @@ namespace MyTrello.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
 
             var newTask = mapper.Map<SaveTaskResource, MyTrello.Domain.Models.Task>(resource);
+            newTask.Task_CreateDate = DateTime.Now;
             var response = await taskService.AddAsync(newTask);
             var taskResource = mapper.Map<MyTrello.Domain.Models.Task, TaskResource>(newTask);
             var res = response.GetResponseResult(taskResource);
@@ -65,9 +70,10 @@ namespace MyTrello.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
-            var task = mapper.Map<SaveTaskResource, MyTrello.Domain.Models.Task>(resource);
-            var response = await taskService.UpdateAsync(id, task);
-            var taskResoure = mapper.Map<MyTrello.Domain.Models.Task, TaskResource>(task);
+
+            var updatedTask = mapper.Map<SaveTaskResource, MyTrello.Domain.Models.Task>(resource);
+            var response = await taskService.UpdateAsync(id, updatedTask);
+            var taskResoure = mapper.Map<MyTrello.Domain.Models.Task, TaskResource>(updatedTask);
             var res = response.GetResponseResult(taskResoure);
             return Ok(res);
         }
@@ -77,7 +83,7 @@ namespace MyTrello.Controllers
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var response = await taskService.DeleteAsync(id);
-            var resource = mapper.Map<MyTrello.Domain.Models.Task, TaskResource>(response.task);
+            var resource = mapper.Map<MyTrello.Domain.Models.Task, TaskResource>(response.Task);
             var res = response.GetResponseResult(resource);
             return Ok(res);
         }

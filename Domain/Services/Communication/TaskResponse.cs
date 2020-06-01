@@ -4,10 +4,10 @@ namespace MyTrello.Domain.Services.Communication
 {
     public class TaskResponse : BaseResponse
     {
-        public Task task { get; private set; }
+        public Task Task { get; private set; }
         public TaskResponse(bool success, string message,Task task) : base(success, message)
         {
-            this.task = task;
+            this.Task = task;
         }
 
         public TaskResponse(Task task) : this(true, string.Empty, task){}

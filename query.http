@@ -1,5 +1,6 @@
 ///***USERS QUERY***///
 //GET http://localhost:5000/api/user
+//GET http://localhost:5000/api/user/1
 
 # POST http://localhost:5000/api/user
 # Content-Type: application/json
@@ -27,28 +28,29 @@
 
 ///***TASKS***///
 //GET http://localhost:5000/api/task
+//GET http://localhost:5000/api/task/1
 
 # POST http://localhost:5000/api/task
 # Content-Type: application/json
 
 # {
-#     "Task_Priority": "bad",
-#     "Task_Name": "bas",
-#     "Task_Description": "dfaam",
-#     "UserId": "1",
+#     "Task_Priority": "red",
+#     "Task_Name": "tse",
+#     "Task_Description": "tse",
+#     "UserId": "2",
 #     "IsArchived": "false",
 # }
 
-# PUT http://localhost:5000/api/task/2
+# PUT http://localhost:5000/api/task/4
 # Content-Type: application/json
 
 # {
-#       "Task_Priority": "grey",
-#      "Task_Name": "testTask",
-#      "Task_Description": "ese@gmail.com",
+#      "Task_Priority": "gray",
+#      "Task_Name": "changedALot",
+#      "Task_Description": "dfaam",
 #      "UserId": "1",
 #      "IsArchived": "true",
 # }
 
-DELETE http://localhost:5000/api/task/3
+//DELETE http://localhost:5000/api/task/5
 

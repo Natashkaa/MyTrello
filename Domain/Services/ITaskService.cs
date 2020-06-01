@@ -10,5 +10,6 @@ namespace MyTrello.Domain.Services
          System.Threading.Tasks.Task<TaskResponse> AddAsync(Task task);
          System.Threading.Tasks.Task<TaskResponse> UpdateAsync(int id, Task task);
          System.Threading.Tasks.Task<TaskResponse> DeleteAsync(int id);
+         System.Threading.Tasks.Task<TaskResponse> GetByIdAsync(int id);
     }
 }

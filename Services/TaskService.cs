@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using MyTrello.Domain.Repositories;
 using MyTrello.Domain.Services;
 using MyTrello.Domain.Services.Communication;
+using MyTrello.Resources;
 
 namespace MyTrello.Services
 {
@@ -53,6 +54,16 @@ namespace MyTrello.Services
         public async Task<IEnumerable<Domain.Models.Task>> GetAllAsync()
         {
             return await taskRepository.GetAllAsync();
+        }
+
+        public async Task<TaskResponse> GetByIdAsync(int id)
+        {
+            var task = await taskRepository.GetByIdAsync(id);
+            if(task == null)
+            {
+                return new TaskResponse($"Can not find task with id {id}");
+            }
+            return new TaskResponse(task);
         }
 
         public async Task<TaskResponse> UpdateAsync(int id, Domain.Models.Task task)

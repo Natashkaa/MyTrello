@@ -55,6 +55,16 @@ namespace MyTrello.Services
             return await userRepository.GetAllAsync();
         }
 
+        public async Task<UserResponse> GetByIdAsync(int id)
+        {
+            var user = await userRepository.GetByIdAsync(id);
+            if(user == null)
+            {
+                return new UserResponse($"Can not find user with id {id}");
+            }
+            return new UserResponse(user);
+        }
+
         public async Task<UserResponse> UpdateAsync(int id, User user)
         {
             var existUser = await userRepository.GetByIdAsync(id);

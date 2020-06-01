@@ -11,5 +11,6 @@ namespace MyTrello.Domain.Services
          Task<UserResponse> AddAsync(User user);
          Task<UserResponse> UpdateAsync(int id, User user);
          Task<UserResponse> DeleteAsync(int id);
+         Task<UserResponse> GetByIdAsync(int id);
     }
 }
