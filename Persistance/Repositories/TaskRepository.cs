@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MyTrello.Domain.Repositories;
@@ -29,6 +30,11 @@ namespace MyTrello.Persistance.Repositories
         public async Task<Domain.Models.Task> GetByIdAsync(int id)
         {
             return await context.Tasks.FirstOrDefaultAsync(t => t.TaskId == id);
+        }
+
+        public async Task<IEnumerable<Domain.Models.Task>> GetUsersTasksAsync(int id)
+        {
+            return await context.Tasks.Where(t => t.UserId == id).ToListAsync();
         }
 
         public void Update(Domain.Models.Task task)

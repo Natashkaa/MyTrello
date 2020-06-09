@@ -27,30 +27,41 @@
 //DELETE http://localhost:5000/api/user/3
 
 ///***TASKS***///
-//GET http://localhost:5000/api/task
-//GET http://localhost:5000/api/task/1
+//GET http://localhost:5000/api/task/getAll
+//Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ik5hdGFsaSIsIm5iZiI6MTU5MTcyNDU4MCwiZXhwIjoxNTkxNzI2Mzc3LCJpYXQiOjE1OTE3MjQ1ODB9.j-YQcE9yOGgZKEa78uRP8I_GoDljy_MpPFTFz3y8oAA
 
-# POST http://localhost:5000/api/task
+//GET http://localhost:5000/api/task/getOne/1
+//GET http://localhost:5000/api/task/userTasks/1
+
+# POST http://localhost:5000/api/task/addTask
 # Content-Type: application/json
 
 # {
-#     "Task_Priority": "red",
-#     "Task_Name": "tse",
-#     "Task_Description": "tse",
+#     "Task_Priority": "green",
+#     "Task_Name": "WWW",
+#     "Task_Description": "WWW",
 #     "UserId": "2",
 #     "IsArchived": "false",
 # }
 
-# PUT http://localhost:5000/api/task/4
+# PUT http://localhost:5000/api/task/updateTask/4
 # Content-Type: application/json
 
 # {
 #      "Task_Priority": "gray",
-#      "Task_Name": "changedALot",
-#      "Task_Description": "dfaam",
-#      "UserId": "1",
+#      "Task_Name": "newChanged3",
+#      "Task_Description": "newChanged",
+#      "UserId": "2",
 #      "IsArchived": "true",
 # }
 
-//DELETE http://localhost:5000/api/task/5
+//DELETE http://localhost:5000/api/task/deleteTask/5
+
+# POST http://localhost:5000/api/authenticate/auth
+# Content-Type: application/json
+
+# {
+#     "User_Email": "test@gmail.com",
+#     "User_Password": "natashanatasha"
+# }
 

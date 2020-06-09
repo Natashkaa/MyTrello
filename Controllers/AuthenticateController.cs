@@ -19,7 +19,7 @@ namespace MyTrello.Controllers
             this.service = service;
             this.mapper = mapper;
         }
-        [HttpPost("authenticate")]
+        [HttpPost("auth")]
         public async Task<IActionResult> Authenticate([FromBody] User user)
         {
             var authUser = await service.AuthenticateAsync(user.User_Email, user.User_Password);

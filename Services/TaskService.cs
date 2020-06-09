@@ -66,6 +66,11 @@ namespace MyTrello.Services
             return new TaskResponse(task);
         }
 
+        public async Task<IEnumerable<Domain.Models.Task>> GetUsersTasksAsync(int id)
+        {
+            return await taskRepository.GetUsersTasksAsync(id);
+        }
+
         public async Task<TaskResponse> UpdateAsync(int id, Domain.Models.Task task)
         {
             var existTask = await taskRepository.GetByIdAsync(id);
@@ -73,6 +78,7 @@ namespace MyTrello.Services
                 return new TaskResponse($"Can not find task with id {id}");
             existTask.Task_Priority = task.Task_Priority;
             existTask.Task_Name = task.Task_Name;
+            existTask.Task_CreateDate = DateTime.Now;
             existTask.Task_Description = task.Task_Description;
             existTask.IsArchived = task.IsArchived;
             try

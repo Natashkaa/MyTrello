@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyTrello.Domain.Services;
 using MyTrello.Extensions;
@@ -12,7 +13,8 @@ using MyTrello.Resources.Communication;
 namespace MyTrello.Controllers
 {
     
-    [Route("api/[controller]")]
+    [Authorize]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class TaskController : ControllerBase
     {
@@ -26,6 +28,7 @@ namespace MyTrello.Controllers
         }
         // GET api/values
         [HttpGet]
+        [ActionName("getAll")]
         public async Task<ResponseResult> GetAllAsync()
         {
             var tasks = await taskService.GetAllAsync();
@@ -38,9 +41,24 @@ namespace MyTrello.Controllers
             };
             return result;
         }
+        [HttpGet("{id}")]
+        [ActionName("userTasks")]
+        public async Task<ResponseResult> GetUsersTasks(int id)
+        {
+            var usersTasks = await taskService.GetUsersTasksAsync(id);
+            var mappedUsersTasks = mapper.Map<IEnumerable<MyTrello.Domain.Models.Task>, IEnumerable<TaskResource>>(usersTasks);
+            var result = new ResponseResult
+            {
+                Data = mappedUsersTasks,
+                Message = mappedUsersTasks.Count() > 0 ? $"Result: {mappedUsersTasks.Count()} items" : "Result: 0 items",
+                Success = true
+            };
+            return result;
+        }
 
         // GET api/values/5
         [HttpGet("{id}")]
+        [ActionName("getOne")]
         public async Task<IActionResult> Get(int id)
         {
             var response = await taskService.GetByIdAsync(id);
@@ -51,13 +69,14 @@ namespace MyTrello.Controllers
 
         // POST api/values
         [HttpPost]
+        [ActionName("addTask")]
         public async Task<IActionResult> PostAsync([FromBody] SaveTaskResource resource)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState.GetErrorMessages());
 
             var newTask = mapper.Map<SaveTaskResource, MyTrello.Domain.Models.Task>(resource);
-            newTask.Task_CreateDate = DateTime.Now;
+            newTask.Task_CreateDate = DateTime.Now.Date;
             var response = await taskService.AddAsync(newTask);
             var taskResource = mapper.Map<MyTrello.Domain.Models.Task, TaskResource>(newTask);
             var res = response.GetResponseResult(taskResource);
@@ -66,6 +85,7 @@ namespace MyTrello.Controllers
 
         // PUT api/values/5
         [HttpPut("{id}")]
+        [ActionName("updateTask")]
         public async Task<IActionResult> PutAsync(int id, [FromBody] SaveTaskResource resource)
         {
             if (!ModelState.IsValid)
@@ -80,6 +100,7 @@ namespace MyTrello.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
+        [ActionName("deleteTask")]
         public async Task<IActionResult> DeleteAsync(int id)
         {
             var response = await taskService.DeleteAsync(id);
