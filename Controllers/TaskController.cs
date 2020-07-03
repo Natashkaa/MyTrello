@@ -18,6 +18,8 @@ namespace MyTrello.Controllers
     [ApiController]
     public class TaskController : ControllerBase
     {
+        const int TASK_LIMIT = 4;
+
         private readonly ITaskService taskService;
         private readonly IMapper mapper;
         public TaskController( ITaskService taskService,
@@ -41,16 +43,20 @@ namespace MyTrello.Controllers
             };
             return result;
         }
-        [HttpGet("{id}")]
+        [HttpGet("{id}/{count}")]
         [ActionName("userTasks")]
-        public async Task<ResponseResult> GetUsersTasks(int id)
+        public async Task<ResponseResult> GetUsersTasks(int id, int count = 1)
         {
-            var usersTasks = await taskService.GetUsersTasksAsync(id);
-            var mappedUsersTasks = mapper.Map<IEnumerable<MyTrello.Domain.Models.Task>, IEnumerable<TaskResource>>(usersTasks);
+            var allUserTasks = await taskService.GetUsersTasksAsync(id);
+            var pickedTasks = allUserTasks.Reverse()
+                                            .ToList()
+                                              .Skip((count - 1) * TASK_LIMIT)
+                                                .Take(TASK_LIMIT);
+            var mappedUserTasks = mapper.Map<IEnumerable<MyTrello.Domain.Models.Task>, IEnumerable<TaskResource>>(pickedTasks);
             var result = new ResponseResult
             {
-                Data = mappedUsersTasks,
-                Message = mappedUsersTasks.Count() > 0 ? $"Result: {mappedUsersTasks.Count()} items" : "Result: 0 items",
+                Data = mappedUserTasks,
+                Message = mappedUserTasks.Count() > 0 ? $"Result: {mappedUserTasks.Count()} items" : "Result: 0 items",
                 Success = true
             };
             return result;

@@ -15,7 +15,8 @@ use MyTrello;
 --	Task_Name varchar(70) NOT NULL,
 --	Task_CreateDate date NOT NULL,
 --	Task_Description varchar(200),
---	UserId int FOREIGN KEY REFERENCES Users(UserId)
+--	UserId int FOREIGN KEY REFERENCES Users(UserId),
+--  IsArchived bit default 0
 --);
 
 select * from Users
@@ -27,4 +28,7 @@ values
 
 insert into dbo.Tasks(Task_Priority, Task_Name, Task_CreateDate, Task_Description, UserId)
 values
-	('red', 'Programming', '20200424', 'learn react and redux', 1)
+	('important', 'Programming', '20200424', 'learn react', 1),
+	('important', 'Programming', '20200424', 'learn redux', 1)
+	('not_important', 'Programming', '20200424', 'learn c#', 1)
+	('not_important', 'Programming', '20200424', 'learn c++', 1)

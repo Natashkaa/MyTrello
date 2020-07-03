@@ -6,11 +6,11 @@
 # Content-Type: application/json
 
 # {
-#     "User_FirstName": "test",
-#     "User_LastName": "test",
+#     "User_FirstName": "Natali",
+#     "User_LastName": "Enot",
 #     "User_PhotoPath": "/test.jpg",
-#     "User_Email": "ese@gmail.com",
-#     "User_Password": "ses",
+#     "User_Email": "test@gmail.com",
+#     "User_Password": "natashanatasha",
 # }
 
 # PUT http://localhost:5000/api/user/2
@@ -24,23 +24,28 @@
 #     "User_Password": "tomtom",
 # }
 
-//DELETE http://localhost:5000/api/user/3
+//DELETE http://localhost:5000/api/user/16
 
 ///***TASKS***///
 //GET http://localhost:5000/api/task/getAll
-//Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ik5hdGFsaSIsIm5iZiI6MTU5MTcyNDU4MCwiZXhwIjoxNTkxNzI2Mzc3LCJpYXQiOjE1OTE3MjQ1ODB9.j-YQcE9yOGgZKEa78uRP8I_GoDljy_MpPFTFz3y8oAA
+//Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ik5hdGFsaSIsIm5iZiI6MTU5MjUwNzE3MSwiZXhwIjoxNTkyNTA4OTcxLCJpYXQiOjE1OTI1MDcxNzF9.vaHrYw8ue6MVJA8SXWWb2KMc2b63riEDIOdzuXNfTv0
+
+//DELETE http://localhost:5000/api/task/deleteTask/40
 
 //GET http://localhost:5000/api/task/getOne/1
-//GET http://localhost:5000/api/task/userTasks/1
+GET http://localhost:5000/api/task/userTasks/1/3
+//Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ik5hdGFsaSIsIm5iZiI6MTU5MjUxMjIzNywiZXhwIjoxNTkyNTE0MDM3LCJpYXQiOjE1OTI1MTIyMzd9._AZRoGpi_-LwDUt-gEaQojfNgVMjo6zaYdrstTdf2W4
+
 
 # POST http://localhost:5000/api/task/addTask
+# Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ik5hdGFsaSIsIm5iZiI6MTU5MjUwNzE3MSwiZXhwIjoxNTkyNTA4OTcxLCJpYXQiOjE1OTI1MDcxNzF9.vaHrYw8ue6MVJA8SXWWb2KMc2b63riEDIOdzuXNfTv0
 # Content-Type: application/json
 
 # {
 #     "Task_Priority": "green",
-#     "Task_Name": "WWW",
-#     "Task_Description": "WWW",
-#     "UserId": "2",
+#     "Task_Name": "English",
+#     "Task_Description": "learn all tenses",
+#     "UserId": 1,
 #     "IsArchived": "false",
 # }
 
@@ -55,9 +60,7 @@
 #      "IsArchived": "true",
 # }
 
-//DELETE http://localhost:5000/api/task/deleteTask/5
-
-# POST http://localhost:5000/api/authenticate/auth
+//POST https://localhost:5001/api/authenticate/auth
 # Content-Type: application/json
 
 # {
