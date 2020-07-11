@@ -50,8 +50,10 @@ namespace MyTrello.Controllers
             var allUserTasks = await taskService.GetUsersTasksAsync(id);
             var pickedTasks = allUserTasks.Reverse()
                                             .ToList()
-                                              .Skip((count - 1) * TASK_LIMIT)
-                                                .Take(TASK_LIMIT);
+                                              .OrderByDescending(t => t.Task_CreateDate)
+                                                .Skip((count - 1) * TASK_LIMIT)
+                                                 .Where(t => t.IsArchived != true)
+                                                  .Take(TASK_LIMIT);
             var mappedUserTasks = mapper.Map<IEnumerable<MyTrello.Domain.Models.Task>, IEnumerable<TaskResource>>(pickedTasks);
             var result = new ResponseResult
             {
@@ -98,6 +100,7 @@ namespace MyTrello.Controllers
                 return BadRequest(ModelState.GetErrorMessages());
 
             var updatedTask = mapper.Map<SaveTaskResource, MyTrello.Domain.Models.Task>(resource);
+            updatedTask.Task_CreateDate = DateTime.Now.Date;
             var response = await taskService.UpdateAsync(id, updatedTask);
             var taskResoure = mapper.Map<MyTrello.Domain.Models.Task, TaskResource>(updatedTask);
             var res = response.GetResponseResult(taskResoure);
