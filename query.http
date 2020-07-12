@@ -33,7 +33,7 @@
 //DELETE http://localhost:5000/api/task/deleteTask/40
 
 //GET http://localhost:5000/api/task/getOne/1
-GET http://localhost:5000/api/task/userTasks/1/1
+GET http://localhost:5000/api/task/userTasks/1/2/0
 //Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6Ik5hdGFsaSIsIm5iZiI6MTU5MjUxMjIzNywiZXhwIjoxNTkyNTE0MDM3LCJpYXQiOjE1OTI1MTIyMzd9._AZRoGpi_-LwDUt-gEaQojfNgVMjo6zaYdrstTdf2W4
 
 

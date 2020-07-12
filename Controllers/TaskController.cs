@@ -13,7 +13,7 @@ using MyTrello.Resources.Communication;
 namespace MyTrello.Controllers
 {
     
-    [Authorize]
+    // [Authorize]
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class TaskController : ControllerBase
@@ -43,25 +43,46 @@ namespace MyTrello.Controllers
             };
             return result;
         }
-        [HttpGet("{id}/{count}")]
+        [HttpGet("{id}/{count}/{sort}")]
         [ActionName("userTasks")]
-        public async Task<ResponseResult> GetUsersTasks(int id, int count = 1)
+        public async Task<ResponseResult> GetUsersTasks(int id, int count = 1, byte sort = 0)
         {
             var allUserTasks = await taskService.GetUsersTasksAsync(id);
-            var pickedTasks = allUserTasks.Reverse()
-                                            .ToList()
-                                              .OrderByDescending(t => t.Task_CreateDate)
-                                                .Skip((count - 1) * TASK_LIMIT)
-                                                 .Where(t => t.IsArchived != true)
-                                                  .Take(TASK_LIMIT);
-            var mappedUserTasks = mapper.Map<IEnumerable<MyTrello.Domain.Models.Task>, IEnumerable<TaskResource>>(pickedTasks);
-            var result = new ResponseResult
+            
+            if(sort == 0)
             {
-                Data = mappedUserTasks,
-                Message = mappedUserTasks.Count() > 0 ? $"Result: {mappedUserTasks.Count()} items" : "Result: 0 items",
-                Success = true
-            };
-            return result;
+                    var pickedTasks = allUserTasks.OrderByDescending(t => t.Task_CreateDate)
+                                                    .Where(t => t.IsArchived != true)
+                                                      .Skip((count - 1) * TASK_LIMIT)
+                                                          .Take(TASK_LIMIT).ToList();
+
+                var mappedUserTasks = mapper.Map<IEnumerable<MyTrello.Domain.Models.Task>, IEnumerable<TaskResource>>(pickedTasks);
+                var result = new ResponseResult
+                {
+                    Data = mappedUserTasks,
+                    Message = mappedUserTasks.Count() > 0 ? $"Result: {mappedUserTasks.Count()} items" : "Result: 0 items",
+                    Success = true
+                };
+                return result;
+                
+            }
+            else
+            {
+                var pickedTasks = allUserTasks.OrderBy(t => t.Task_CreateDate)
+                                                .Where(t => t.IsArchived != true)
+                                                  .Skip((count - 1) * TASK_LIMIT)
+                                                    .Take(TASK_LIMIT).ToList();
+
+                                                
+                var mappedUserTasks = mapper.Map<IEnumerable<MyTrello.Domain.Models.Task>, IEnumerable<TaskResource>>(pickedTasks);
+                var result = new ResponseResult
+                {
+                    Data = mappedUserTasks,
+                    Message = mappedUserTasks.Count() > 0 ? $"Result: {mappedUserTasks.Count()} items" : "Result: 0 items",
+                    Success = true
+                };
+                return result;
+            }
         }
 
         // GET api/values/5
@@ -117,5 +138,27 @@ namespace MyTrello.Controllers
             var res = response.GetResponseResult(resource);
             return Ok(res);
         }
+    
+        // GET api/values/5
+        // [HttpGet("{id}/{count}")]
+        // [ActionName("archiveTasks")]
+        // public async Task<ResponseResult> GetArchiveTasks(int id, int count = 1, bool needSort = false)
+        // {
+        //     var allUserTasks = await taskService.GetUsersTasksAsync(id);
+        //     var pickedTasks = allUserTasks.Reverse()//this we do after we did check need sort or not
+        //                                     .ToList()//then this all
+        //                                       .OrderByDescending(t => t.Task_CreateDate)
+        //                                         .Skip((count - 1) * TASK_LIMIT)
+        //                                          .Where(t => t.IsArchived == true)
+        //                                           .Take(TASK_LIMIT);
+        //     var mappedUserTasks = mapper.Map<IEnumerable<MyTrello.Domain.Models.Task>, IEnumerable<TaskResource>>(pickedTasks);
+        //     var result = new ResponseResult
+        //     {
+        //         Data = mappedUserTasks,
+        //         Message = mappedUserTasks.Count() > 0 ? $"Result: {mappedUserTasks.Count()} items" : "Result: 0 items",
+        //         Success = true
+        //     };
+        //     return result;
+        // }
     }
 }
