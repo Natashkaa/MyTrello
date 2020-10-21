@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using MyTrello.Domain.Models;
 using MyTrello.Domain.Repositories;
 using MyTrello.Domain.Services;
@@ -82,6 +83,20 @@ namespace MyTrello.Services
             catch(Exception ex)
             {
                 return new UserResponse($"User update error: {ex.Message}");
+            }
+        }
+
+        public async Task<UserResponse> UpdatePhoto(int id, IFormFile uploadedFile)
+        {
+            try
+            {
+                User user = await userRepository.UpdatePhoto(id, uploadedFile);
+                await unitOfWork.CompleteAsync();
+                return new UserResponse(user);
+            }
+            catch(Exception ex)
+            {
+                return new UserResponse($"Error: something happend while updating photo: {ex.Message}");
             }
         }
     }

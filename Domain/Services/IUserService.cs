@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using MyTrello.Domain.Models;
 using MyTrello.Domain.Services.Communication;
 
@@ -12,5 +13,6 @@ namespace MyTrello.Domain.Services
          Task<UserResponse> UpdateAsync(int id, User user);
          Task<UserResponse> DeleteAsync(int id);
          Task<UserResponse> GetByIdAsync(int id);
+         Task<UserResponse> UpdatePhoto(int id, IFormFile uploadedFile);
     }
 }
